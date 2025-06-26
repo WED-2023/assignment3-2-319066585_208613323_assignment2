@@ -18,7 +18,7 @@ tags:
     description: All recipes general info
 
 paths:
-  /register:
+  /Register:
     post:
       tags:
         - Auth
@@ -37,7 +37,7 @@ paths:
         "400":
           description: wrong input parameters
 
-  /login:
+  /Login:
     post:
       tags:
         - Auth

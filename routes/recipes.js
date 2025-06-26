@@ -31,9 +31,6 @@ router.get("/search", async (req, res, next) => {
     const number = parseInt(req.query.number) || 5;
     const user_id = req.session?.user_id;
 
-    if (!query) {
-      return res.status(400).send({ message: "Missing search query", success: false });
-    }
 
     // check if the search term already exists in the user's search history
     const existingSearches = await DButils.execQuery(`
@@ -80,7 +77,7 @@ router.get("/show-recipe/:recipeId", async (req, res, next) => {
 router.get("/:recipeId", async (req, res, next) => {
   try {
     const recipe = await recipes_utils.getRecipeDetails(req.params.recipeId);
-    res.send(recipe);
+    res.send({recipe});
 
   } catch (error) {
     next(error);
@@ -121,6 +118,7 @@ router.post("/like/:recipeId", async (req, res, next) => {
     if (!req.session || !req.session.user_id) {
       return res.status(401).send("User not logged in");
     }
+    console.log('id', req.session.user_id);
     // Check if the user has already liked the recipe
     const user_id = req.session.user_id;
     const likedRecipes = await recipes_utils.getLikedRecipes(user_id);
